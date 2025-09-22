@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Game Imobiliária</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 20px;
+    padding-bottom: 100px; /* espaço para o botão flutuante */
+  }
+
+  #game {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+
+  .house {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background: #f9f9f9;
+  }
+
+  .house img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  button.buy-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  #balance-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: gold;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div id="game">
+  <div class="house" data-price="50">
+    <img src="./harry-potter-casa.png" alt="Casa 1">
+    <p>Preço: $50</p>
+    <button class="buy-btn">Comprar</button>
+    <p class="status"></p>
+  </div>
+
+  <div class="house" data-price="75">
+    <img src="./hpotter-casa2.png" alt="Casa 2">
+    <p>Preço: $75</p>
+    <button class="buy-btn">Comprar</button>
+    <p class="status"></p>
+  </div>
+
+  <div class="house" data-price="100">
+    <img src="./harrypotter-casa3.png" alt="Casa 3">
+    <p>Preço: $100</p>
+    <button class="buy-btn">Comprar</button>
+    <p class="status"></p>
+  </div>
+</div>
+
+<p>Saldo atual: $<span id="balance">0</span></p>
+
+<div id="balance-box">? Tap para ganhar $1</div>
+
+<script>
+let balance = 0;
+const balanceDisplay = document.getElementById('balance');
+const balanceBox = document.getElementById('balance-box');
+
+// Ganha dinheiro ao clicar na caixinha flutuante
+balanceBox.addEventListener('click', () => {
+  balance += 1;
+  balanceDisplay.textContent = balance;
+});
+
+// Comprar casas
+document.querySelectorAll('.buy-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const houseDiv = e.target.closest('.house');
+    const price = parseInt(houseDiv.dataset.price);
+
+    if (balance >= price) {
+      balance -= price;
+      balanceDisplay.textContent = balance;
+      e.target.textContent = 'Comprado!';
+      e.target.disabled = true;
+      houseDiv.querySelector('.status').textContent = 'Você comprou esta casa!';
+    } else {
+      houseDiv.querySelector('.status').textContent = 'Saldo insuficiente!';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
