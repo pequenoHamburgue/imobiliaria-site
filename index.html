@@ -77,20 +77,20 @@
 
 <p>Saldo atual: $<span id="balance">0</span></p>
 
-<div id="balance-box">? Tap para ganhar $1</div>
+<div id="balance-box">Click para ganhar $1</div>
 
 <script>
 let balance = 0;
 const balanceDisplay = document.getElementById('balance');
 const balanceBox = document.getElementById('balance-box');
 
-// Ganha dinheiro ao clicar na caixinha flutuante
+
 balanceBox.addEventListener('click', () => {
   balance += 1;
   balanceDisplay.textContent = balance;
 });
 
-// Comprar casas
+
 document.querySelectorAll('.buy-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const houseDiv = e.target.closest('.house');
